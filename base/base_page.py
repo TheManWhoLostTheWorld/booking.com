@@ -8,6 +8,7 @@ from metaclasses.meta_lacator import MetaLocator
 
 class BasePage(metaclass=MetaLocator):
 
+    _ACCEPT_COOKIES_BUTTON = "//button[@id='onetrust-accept-btn-handler']"
     _PAGE_URL = "https://www.booking.com/"
     _LOGO = "//a[@data-testid='header-booking-logo']"
     _STAYS = "//a[@id='accommodations']"
@@ -23,4 +24,7 @@ class BasePage(metaclass=MetaLocator):
 
     def click_logo(self):
         self.wait.until(EC.visibility_of_element_located(self._LOGO)).click()
+
+    def accept_cookies(self):
+        self.wait.until(EC.element_to_be_clickable(self._ACCEPT_COOKIES_BUTTON)).click()
 
