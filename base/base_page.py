@@ -27,4 +27,6 @@ class BasePage(metaclass=MetaLocator):
 
     def accept_cookies(self):
         self.wait.until(EC.element_to_be_clickable(self._ACCEPT_COOKIES_BUTTON)).click()
+        # TODO need to fix a bug with cookies acceptance while opening page first time
+        #  sometimes there is no cookies window so tests fail
 
