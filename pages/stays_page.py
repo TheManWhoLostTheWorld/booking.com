@@ -26,8 +26,6 @@ class StaysPage(BasePage):
         self.wait.until(EC.element_to_be_clickable(self._SEARCH_BUTTON)).click()
 
     def prof_location(self, destination: str):
-
-        # def location_locator(destination: str):
-        #     return f"//div[@data-testid='breadcrumbs']//span[contains(text(), {destination})]"
-
         self.wait.until(EC.visibility_of_element_located(('xpath', f"//div[@data-testid='breadcrumbs']//span[contains(text(), {destination})]")))
+
+
