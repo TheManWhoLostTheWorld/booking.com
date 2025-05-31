@@ -1,9 +1,11 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from base.base_page import BasePage
+from datetime import datetime
 import time
 
-from base.base_page import BasePage
+
 
 months = {
     1: "January",
@@ -38,6 +40,7 @@ class CalendarHelper(BasePage):
     def __init__(self, driver):
         self.driver: WebDriver = driver
         self.wait = WebDriverWait(self.driver, 15, 1)
+        self.current_date = datetime.now()
 
     def open(self):
         self.wait.until(EC.element_to_be_clickable(self._CALENDAR_TRIGGER_BUTTON)).click()
@@ -48,17 +51,19 @@ class CalendarHelper(BasePage):
         calendar.find_element(*self._NEXT_MONTHS_BUTTON).click()
 
     def set_date(self, day: int, month: int, year: int):
-        target_month_year = f"{months[month]} {year}"
-        calendar = self.wait.until(EC.visibility_of_element_located(self._CALENDAR))
-        while target_month_year not in self.driver.find_element(*self._CURRENT_MONTHS_AND_YEAR).text:
-            self.click_next_month_button()
-            time.sleep(0.5)
-        days = calendar.find_elements(*self._DAY)
-        for element in days:
-            if str(day) in element.text:
-                element.click()
-                # assert element.find_element(*self._DAY_STATUS).get_attribute("aria_checked") == "true"
-                # break
+        if datetime(day=day, month=month, year=year) >= self.current_date:
+            target_month_year = f"{months[month]} {year}"
+            calendar = self.wait.until(EC.visibility_of_element_located(self._CALENDAR))
+            while target_month_year not in self.driver.find_element(*self._CURRENT_MONTHS_AND_YEAR).text:
+                self.click_next_month_button()
+                time.sleep(0.5)
+            days = calendar.find_elements(*self._DAY)
+            for element in days:
+                if str(day) in element.text:
+                    element.click()
+                    break
+        else:
+            raise Exception("Date in the past")
 
     def plus_minus_day(self, days: int):
         elements = self.wait.until(EC.visibility_of_all_elements_located(self._PLUS_MINUS_DAYS))

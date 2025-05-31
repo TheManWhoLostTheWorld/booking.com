@@ -1,5 +1,9 @@
 import pytest
+import os
 from selenium import webdriver
+
+def get_options():
+    ...
 
 # фикстура иницализации драйвера
 @pytest.fixture(autouse=True)
