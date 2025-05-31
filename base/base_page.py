@@ -30,3 +30,5 @@ class BasePage(metaclass=MetaLocator):
         # TODO need to fix a bug with cookies acceptance while opening page first time
         #  sometimes there is no cookies window so tests fail
 
+        
+
