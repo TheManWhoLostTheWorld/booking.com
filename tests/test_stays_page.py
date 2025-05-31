@@ -30,3 +30,4 @@ class TestStays(BaseTest):
         self.people.ages(0, 8, 17)
         self.stays_page.click_search()
         self.stays_page.prof_location("Paris")
+

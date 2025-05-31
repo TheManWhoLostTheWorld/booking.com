@@ -1,5 +1,4 @@
-
-
+from selenium.common import NoSuchElementException
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
@@ -20,15 +19,20 @@ class BasePage(metaclass=MetaLocator):
         self.wait = WebDriverWait(self.driver, 15, 1)
 
     def open(self):
-       self.driver.get(self._PAGE_URL)
+        self.driver.get(self._PAGE_URL)
+        assert self.wait.until(EC.visibility_of_element_located(self._LOGO))
 
     def click_logo(self):
         self.wait.until(EC.visibility_of_element_located(self._LOGO)).click()
 
     def accept_cookies(self):
-        self.wait.until(EC.element_to_be_clickable(self._ACCEPT_COOKIES_BUTTON)).click()
-        # TODO need to fix a bug with cookies acceptance while opening page first time
-        #  sometimes there is no cookies window so tests fail
 
-        
+        try:
+            self.driver.find_element(*self._ACCEPT_COOKIES_BUTTON).is_displayed()
+            self.wait.until(EC.element_to_be_clickable(self._ACCEPT_COOKIES_BUTTON)).click()
+        except NoSuchElementException:
+            pass
+
+
+
 
