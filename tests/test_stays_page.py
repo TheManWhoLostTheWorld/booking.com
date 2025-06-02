@@ -31,3 +31,17 @@ class TestStays(BaseTest):
         self.stays_page.click_search()
         self.stays_page.prof_location("Paris")
 
+    def test_checkbox(self):
+        self.stays_page.open()
+        self.stays_page.accept_cookies()
+        self.stays_page.add_destination("Paris")
+        self.calendar.open()
+        self.calendar.set_date(3, 6, 2025)
+        self.calendar.set_date(8, 6, 2025)
+        self.people.set_people(2, 3)
+        self.people.ages(0, 8, 17)
+        self.stays_page.click_search()
+        time.sleep(3)
+        self.checkbox.click_breakfast_included_cb()
+        time.sleep(3)
+

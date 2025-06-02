@@ -24,7 +24,6 @@ class PeopleHelper(BasePage):
     def __init__(self, driver):
         self.driver: WebDriver = driver
         self.wait = WebDriverWait(self.driver, 15, 1)
-        # self.dropdown = Select(self.driver.find_element())
 
 
     def open_select_people_popup(self):
