@@ -31,6 +31,12 @@ class TestStays(BaseTest):
         self.stays_page.click_search()
         self.stays_page.prof_location("Paris")
 
+    def test_scroll_to_element(self):
+        self.stays_page.open()
+        self.ui.scroll_to(("xpath", "//button[@id='CITY-tab-trigger']"))
+        time.sleep(3)
+
+
     def test_checkbox(self):
         self.stays_page.open()
         self.stays_page.accept_cookies()
