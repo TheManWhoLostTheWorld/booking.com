@@ -25,7 +25,10 @@ class StaysPage(BasePage):
     def click_search(self):
         self.wait.until(EC.element_to_be_clickable(self._SEARCH_BUTTON)).click()
 
-    def prof_location(self, destination: str):
+    def proof_location(self, destination: str):
         self.wait.until(EC.visibility_of_element_located(('xpath', f"//div[@data-testid='breadcrumbs']//span[contains(text(), {destination})]")))
+
+    def dropdown_destination_click(self, destination: str):
+        self.wait.until(EC.visibility_of_element_located(('xpath', f"//div[@data-testid='autocomplete-results-options']//div[contains(text(), {destination})]"))).click()
 
 

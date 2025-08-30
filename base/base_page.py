@@ -3,6 +3,7 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from metaclasses.meta_lacator import MetaLocator
+import time
 
 
 class BasePage(metaclass=MetaLocator):
@@ -20,6 +21,7 @@ class BasePage(metaclass=MetaLocator):
 
     def open(self):
         self.driver.get(self._PAGE_URL)
+        time.sleep(1)
         assert self.wait.until(EC.visibility_of_element_located(self._LOGO))
 
     def click_logo(self):
