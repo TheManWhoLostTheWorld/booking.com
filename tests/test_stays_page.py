@@ -7,6 +7,13 @@ class TestStays(BaseTest):
         self.stays_page.open()
         self.stays_page.click_stays()
 
+    def test_search_only_city(self):
+        self.stays_page.open()
+        self.stays_page.accept_cookies()
+        self.stays_page.add_destination("Istanbul")
+        self.stays_page.click_search()
+        self.stays_page.prof_location("Istanbul")
+
     def test_search_vacation_country(self):
         self.stays_page.open()
         self.stays_page.accept_cookies()
