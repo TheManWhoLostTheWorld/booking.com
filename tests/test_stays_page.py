@@ -9,17 +9,21 @@ class TestStays(BaseTest):
 
     def test_search_only_city(self):
         self.stays_page.open()
+        self.stays_page.cancel_registration_window()
         self.stays_page.accept_cookies()
         self.stays_page.add_destination("Istanbul")
         self.stays_page.click_search()
+        self.stays_page.cancel_registration_window()
         self.stays_page.proof_location("Istanbul")
 
     def test_dropdown_click(self):
         self.stays_page.open()
+        self.stays_page.cancel_registration_window()
         self.stays_page.accept_cookies()
         self.stays_page.add_destination("Bei")
         self.stays_page.dropdown_destination_click("Beirut")
         self.stays_page.click_search()
+        self.stays_page.cancel_registration_window()
         self.stays_page.proof_location("Beirut")
 
     def test_search_vacation_country(self):
