@@ -30,6 +30,6 @@ class StaysPage(BasePage):
 
 
     def dropdown_destination_click(self, destination: str):
-        self.wait.until(EC.element_to_be_clickable(('xpath', f"//div[@data-testid='autocomplete-results-options']//div[contains(text(), {destination})]/ancestor::li[@role='option']"))).click()
+        self.wait.until(EC.element_to_be_clickable(('xpath', f"//div[@data-testid='autocomplete-results-options']//div[text()='{destination}']/ancestor::li[@role='option']"))).click()
 
 

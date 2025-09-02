@@ -22,7 +22,7 @@ class TestStays(BaseTest):
         self.stays_page.dropdown_destination_click("Beirut")
         time.sleep(3)
         self.stays_page.click_search()
-        self.stays_page.proof_location("Berlin")
+        self.stays_page.proof_location("Beirut")
 
     def test_search_vacation_country(self):
         self.stays_page.open()
