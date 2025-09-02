@@ -18,9 +18,7 @@ class TestStays(BaseTest):
         self.stays_page.open()
         self.stays_page.accept_cookies()
         self.stays_page.add_destination("Bei")
-        time.sleep(3)
         self.stays_page.dropdown_destination_click("Beirut")
-        time.sleep(3)
         self.stays_page.click_search()
         self.stays_page.proof_location("Beirut")
 
