@@ -16,7 +16,7 @@ class StaysPage(BasePage):
         self.wait.until(EC.visibility_of_element_located(self._DESTINATION))
         assert self._STAYS_URL in self.driver.current_url, "Wrong Stays page URL"
 
-    def add_destination(self, where_to_go):
+    def add_destination(self, where_to_go: str):
         self.wait.until(EC.visibility_of_element_located(self._DESTINATION)).send_keys(where_to_go)
 
     def open_select_people_popup(self):
@@ -26,9 +26,10 @@ class StaysPage(BasePage):
         self.wait.until(EC.element_to_be_clickable(self._SEARCH_BUTTON)).click()
 
     def proof_location(self, destination: str):
-        self.wait.until(EC.visibility_of_element_located(('xpath', f"//div[@data-testid='breadcrumbs']//span[contains(text(), {destination})]")))
+        self.driver.find_element('xpath', f"//div[@data-testid='breadcrumbs']//span[text()='{destination}']")
+
 
     def dropdown_destination_click(self, destination: str):
-        self.wait.until(EC.visibility_of_element_located(('xpath', f"//div[@data-testid='autocomplete-results-options']//div[contains(text(), {destination})]"))).click()
+        self.wait.until(EC.element_to_be_clickable(('xpath', f"//div[@data-testid='autocomplete-results-options']//div[contains(text(), {destination})]/ancestor::li[@role='option']"))).click()
 
 
