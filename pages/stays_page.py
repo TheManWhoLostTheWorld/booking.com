@@ -31,6 +31,9 @@ class StaysPage(BasePage):
     def proof_location(self, destination: str):
         self.driver.find_element('xpath', f"//div[@data-testid='breadcrumbs']//span[text()='{destination}']")
 
+    def add_destination_by_dropdown(self, half_destination: str):
+        self.wait.until(EC.visibility_of_element_located(self._DESTINATION)).send_keys(half_destination)
+
     def dropdown_destination_click(self, destination: str):
         self.wait.until(EC.element_to_be_clickable(('xpath', f"//div[@data-testid='autocomplete-results-options']//div[text()='{destination}']/ancestor::li[@role='option']"))).click()
 
