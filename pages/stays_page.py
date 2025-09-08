@@ -18,9 +18,9 @@ class StaysPage(BasePage):
         self.wait.until(EC.visibility_of_element_located(self._DESTINATION))
         assert self._STAYS_URL in self.driver.current_url, "Wrong Stays page URL"
 
-    def add_destination(self, where_to_go, hotel = None):
-        self.wait.until(EC.visibility_of_element_located(self._DESTINATION)).send_keys(where_to_go, hotel)
-        self.wait.until(EC.element_to_be_clickable(('xpath', f"//div[@data-testid='autocomplete-results-options']//div[text()={hotel, where_to_go}]/ancestor::li[@role='option']")))
+    def add_destination(self, where_to_go: str):
+        self.wait.until(EC.visibility_of_element_located(self._DESTINATION)).send_keys(where_to_go)
+        self.wait.until(EC.element_to_be_clickable(('xpath', f"//div[@data-testid='autocomplete-results-options']//div[text()='{where_to_go}']/ancestor::li[@role='option']")))
 
     def open_select_people_popup(self):
         self.wait.until(EC.visibility_of_element_located(self._PEOPLE_SELECT_TRIGGER)).click()
