@@ -11,10 +11,10 @@ class TestStays(BaseTest):
         self.stays_page.open()
         self.stays_page.cancel_registration_window()
         self.stays_page.accept_cookies()
-        self.stays_page.add_destination("Istanbul")
+        self.stays_page.add_destination("Hamburg")
         self.stays_page.click_search()
         self.stays_page.cancel_registration_window()
-        self.stays_page.proof_location("Istanbul")
+        self.stays_page.proof_location("Hamburg")
 
     def test_dropdown_click(self):
         self.stays_page.open()
@@ -25,6 +25,16 @@ class TestStays(BaseTest):
         self.stays_page.click_search()
         self.stays_page.cancel_registration_window()
         self.stays_page.proof_location("Beirut")
+
+    def test_search_specific_hotel(self):
+        self.stays_page.open()
+        self.stays_page.cancel_registration_window()
+        self.stays_page.accept_cookies()
+        self.stays_page.add_destination("Hamburg", "Radisson Blu")
+        self.stays_page.click_search()
+        self.stays_page.cancel_registration_window()
+        self.stays_page.proof_location("Hamburg")
+        self.stays_page.proof_hotel("Radisson Blu")
 
     def test_search_vacation_country(self):
         self.stays_page.open()
