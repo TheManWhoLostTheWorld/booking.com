@@ -3,11 +3,13 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from metaclasses.meta_lacator import MetaLocator
+import time
 
 
 class BasePage(metaclass=MetaLocator):
 
     _ACCEPT_COOKIES_BUTTON = "//button[@id='onetrust-accept-btn-handler']"
+    _REG_WINDOW_CLOSE = "//button[@aria-label='Dismiss sign-in info.']"
     _PAGE_URL = "https://www.booking.com/"
     _LOGO = "//a[@data-testid='header-booking-logo']"
     _STAYS = "//a[@id='accommodations']"
@@ -20,6 +22,7 @@ class BasePage(metaclass=MetaLocator):
 
     def open(self):
         self.driver.get(self._PAGE_URL)
+        time.sleep(1)
         assert self.wait.until(EC.visibility_of_element_located(self._LOGO))
 
     def click_logo(self):
@@ -32,6 +35,15 @@ class BasePage(metaclass=MetaLocator):
             self.wait.until(EC.element_to_be_clickable(self._ACCEPT_COOKIES_BUTTON)).click()
         except NoSuchElementException:
             pass
+
+    def cancel_registration_window(self):
+
+        try:
+            self.driver.find_element(*self._REG_WINDOW_CLOSE).is_displayed()
+            self.wait.until(EC.element_to_be_clickable(self._REG_WINDOW_CLOSE)).click()
+        except NoSuchElementException:
+            pass
+
 
 
 
