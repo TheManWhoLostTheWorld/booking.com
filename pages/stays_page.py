@@ -11,6 +11,7 @@ class StaysPage(BasePage):
     _CHECK_OUT_DATE = "//span[@data-testid='date-display-field-end']"
     _SEARCH_BUTTON = "//button[@type='submit']"
     _PEOPLE_SELECT_TRIGGER = "//button[@data-testid='occupancy-config']"
+    _DROP_DOWN_MENU = "//div[@data-testid='autocomplete-results-options']"
 
 
     def click_stays(self):
@@ -36,6 +37,10 @@ class StaysPage(BasePage):
 
     def dropdown_destination_click(self, destination: str):
         self.wait.until(EC.element_to_be_clickable(('xpath', f"//div[@data-testid='autocomplete-results-options']//div[text()='{destination}']/ancestor::li[@role='option']"))).click()
+
+    def add_hotel(self, hotel: str):
+        self.wait.until(EC.visibility_of_element_located(self._DESTINATION)).send_keys(hotel)
+        self.wait.until(EC.element_to_be_clickable(('xpath', f"//div[@data-testid='autocompleAddte-result']//div[contains(text(), '{hotel}')]")))
 
     def proof_hotel(self, hotel: str):
         self.wait.until(EC.visibility_of_element_located(('xpath', f"(//div[@data-testid='property-card-container'])[1]//div[contains(text(), '{hotel}')]")))

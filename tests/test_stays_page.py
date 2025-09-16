@@ -30,22 +30,24 @@ class TestStays(BaseTest):
         self.stays_page.open()
         self.stays_page.cancel_registration_window()
         self.stays_page.accept_cookies()
-        self.stays_page.add_destination("Hamburg", "Radisson Blu")
+        self.stays_page.add_hotel("Radisson Blu")
         self.stays_page.click_search()
         self.stays_page.cancel_registration_window()
-        self.stays_page.proof_location("Hamburg")
         self.stays_page.proof_hotel("Radisson Blu")
 
-    def test_search_vacation_country(self):
+    def test_search_country_with_dates(self):
         self.stays_page.open()
+        self.stays_page.cancel_registration_window()
         self.stays_page.accept_cookies()
         self.stays_page.add_destination("Germany")
+        self.stays_page.accept_cookies()
         self.calendar.open()
-        self.calendar.set_date(1, 6, 2025)
-        self.calendar.set_date(12, 6, 2025)
+        self.calendar.set_date(25, 9, 2025)
+        self.calendar.set_date(5, 10, 2025)
         self.people.set_people(2, 2)
         self.people.ages(5, 12)
         self.stays_page.click_search()
+        self.stays_page.cancel_registration_window()
         self.stays_page.proof_location("Germany")
 
     def test_search_vacation_city(self):
