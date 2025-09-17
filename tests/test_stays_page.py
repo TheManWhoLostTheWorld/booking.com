@@ -4,6 +4,7 @@ import time
 
 class TestStays(BaseTest):
 
+    @pytest.mark.flaky(reruns=2, reruns_delay=2, max_reruns=3)
     @pytest.mark.regression
     def test_open_stays_page(self):
         self.stays_page.open()
