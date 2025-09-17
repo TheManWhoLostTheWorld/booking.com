@@ -40,7 +40,7 @@ class StaysPage(BasePage):
 
     def add_hotel(self, hotel: str):
         self.wait.until(EC.visibility_of_element_located(self._DESTINATION)).send_keys(hotel)
-        self.wait.until(EC.element_to_be_clickable(('xpath', f"//div[@data-testid='autocompleAddte-result']//div[contains(text(), '{hotel}')]")))
+        self.wait.until(EC.element_to_be_clickable(('xpath', f"//div[@data-testid='autocomplete-result']//div[contains(text(), '{hotel}')]")))
 
     def proof_hotel(self, hotel: str):
         self.wait.until(EC.visibility_of_element_located(('xpath', f"(//div[@data-testid='property-card-container'])[1]//div[contains(text(), '{hotel}')]")))
