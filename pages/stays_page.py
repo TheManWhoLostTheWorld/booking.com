@@ -12,6 +12,8 @@ class StaysPage(BasePage):
     _SEARCH_BUTTON = "//button[@type='submit']"
     _PEOPLE_SELECT_TRIGGER = "//button[@data-testid='occupancy-config']"
     _DROP_DOWN_MENU = "//div[@data-testid='autocomplete-results-options']"
+    _ALERT_EMPTY_DESTINATION = "//div[@data-testid='searchbox-alert']//div"
+    _NO_PROPERTY_SCREEN = "//div[@data-testid='properties-list-empty-state']"
 
 
     def click_stays(self):
@@ -44,5 +46,14 @@ class StaysPage(BasePage):
 
     def proof_hotel(self, hotel: str):
         self.wait.until(EC.visibility_of_element_located(('xpath', f"(//div[@data-testid='property-card-container'])[1]//div[contains(text(), '{hotel}')]")))
+
+    def proof_destination_empty(self):
+        self.wait.until(EC.visibility_of_element_located(self._ALERT_EMPTY_DESTINATION))
+
+    def add_non_existent_place(self, where_to_go: str):
+        self.wait.until(EC.visibility_of_element_located(self._DESTINATION)).send_keys(where_to_go)
+
+    def no_property_screen(self):
+        self.wait.until(EC.visibility_of_element_located(self._NO_PROPERTY_SCREEN))
 
 

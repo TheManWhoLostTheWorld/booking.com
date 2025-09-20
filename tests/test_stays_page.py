@@ -93,6 +93,41 @@ class TestStays(BaseTest):
         self.stays_page.click_search()
         self.stays_page.proof_location("Paris")
 
+    @pytest.mark.regression
+    def test_search_no_dates(self):
+        self.stays_page.open()
+        self.stays_page.accept_cookies()
+        self.stays_page.add_destination("London")
+        self.stays_page.accept_cookies()
+        self.stays_page.click_search()
+        self.stays_page.proof_location("London")
+
+    @pytest.mark.negative
+    @pytest.mark.regression
+    def test_destination_empty(self):
+        self.stays_page.open()
+        self.stays_page.accept_cookies()
+        self.calendar.open()
+        self.calendar.set_date(21, 9, 2025)
+        self.calendar.set_date(22, 9, 2025)
+        self.stays_page.click_search()
+        self.stays_page.proof_destination_empty()
+
+    def test_no_properties_found(self):
+        self.stays_page.open()
+        self.stays_page.accept_cookies()
+        self.stays_page.add_non_existent_place("Отель в центре Земли")
+        self.stays_page.cancel_registration_window()
+        self.stays_page.accept_cookies()
+        self.calendar.open()
+        self.calendar.set_date(23, 9, 2025)
+        self.calendar.set_date(30, 3, 2025)
+        self.stays_page.click_search()
+        self.stays_page.no_property_screen()
+
+
+
+
     # def test_scroll_to_element(self):
     #     self.stays_page.open()
     #     self.ui.scroll_to(("xpath", "//button[@id='CITY-tab-trigger']"))
