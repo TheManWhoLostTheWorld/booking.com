@@ -30,6 +30,7 @@ class BasePage(metaclass=MetaLocator):
 
     def accept_cookies(self):
 
+        time.sleep(2) # this condition was added because of the standard delay before cookies window appears
         try:
             self.driver.find_element(*self._ACCEPT_COOKIES_BUTTON).is_displayed()
             self.wait.until(EC.element_to_be_clickable(self._ACCEPT_COOKIES_BUTTON)).click()
@@ -38,11 +39,18 @@ class BasePage(metaclass=MetaLocator):
 
     def cancel_registration_window(self):
 
+        time.sleep(1)
+
         try:
             self.driver.find_element(*self._REG_WINDOW_CLOSE).is_displayed()
             self.wait.until(EC.element_to_be_clickable(self._REG_WINDOW_CLOSE)).click()
         except NoSuchElementException:
             pass
+
+        # TODO:
+        #  Реализовать декларативный интерфейс
+        #  Расписать Футер
+        #  Расписать Хедер
 
 
 

@@ -11,10 +11,10 @@ class PeopleHelper(BasePage):
 
     _PEOPLE_SELECT_TRIGGER = "//button[@data-testid='occupancy-config']"
     _PEOPLE_SELECT_POPUP = "//div[@data-testid='occupancy-popup']"
-    _QTY_ADULTS_INFO = "//div[@data-testid='occupancy-popup']//div[input[@id='group_adults']]//div[2]/span"
+    _QTY_ADULTS_INFO = "//input[@id='group_adults']"
     _ADULTS_SELECT_MINUS = "(//div[@data-testid='occupancy-popup']//button)[1]"
     _ADULTS_SELECT_PLUS = "(//div[@data-testid='occupancy-popup']//button)[2]"
-    _QTY_CHILDREN_INFO = "//div[@data-testid='occupancy-popup']//div[input[@id='group_children']]//div[2]/span"
+    _QTY_CHILDREN_INFO = "//input[@id='group_children']"
     _CHILDREN_SELECT_MINUS = "(//div[@data-testid='occupancy-popup']//button)[3]"
     _CHILDREN_SELECT_PLUS = "(//div[@data-testid='occupancy-popup']//button)[4]"
     _ROOMS_SELECT_MINUS = "(//div[@data-testid='occupancy-popup']//button)[5]"
@@ -32,21 +32,21 @@ class PeopleHelper(BasePage):
         self.wait.until(EC.visibility_of_element_located(self._PEOPLE_SELECT_POPUP), message="People select popup was not opened")
 
 
-    def set_people(self, adults, children):
+    def set_people(self, adults : int, children : int):
 
         self.open_select_people_popup()
 
-        while adults != int(self.wait.until(EC.visibility_of_element_located(self._QTY_ADULTS_INFO)).text):
-            if adults < int(self.driver.find_element(*self._QTY_ADULTS_INFO).text):
+        while adults != int(self.driver.find_element(*self._QTY_ADULTS_INFO).get_attribute("value")):
+            if adults < int(self.driver.find_element(*self._QTY_ADULTS_INFO).get_attribute("value")):
                 self.driver.find_element(*self._ADULTS_SELECT_MINUS).click()
-            elif adults > int(self.driver.find_element(*self._QTY_ADULTS_INFO).text):
+            elif adults > int(self.driver.find_element(*self._QTY_ADULTS_INFO).get_attribute("value")):
                 self.driver.find_element(*self._ADULTS_SELECT_PLUS).click()
-        assert adults == int(self.driver.find_element(*self._QTY_ADULTS_INFO).text), "Wrong adults qty"
+        assert adults == int(self.driver.find_element(*self._QTY_ADULTS_INFO).get_attribute("value")), "Wrong adults qty"
 
-        while children != int(self.wait.until(EC.visibility_of_element_located(self._QTY_CHILDREN_INFO)).text):
+        while children != int(self.driver.find_element(*self._QTY_CHILDREN_INFO).get_attribute("value")):
             self.driver.find_element(*self._CHILDREN_SELECT_PLUS).click()
             time.sleep(0.5)
-        assert children == int(self.driver.find_element(*self._QTY_CHILDREN_INFO).text), "Wrong children qty"
+        assert children == int(self.driver.find_element(*self._QTY_CHILDREN_INFO).get_attribute("value")), "Wrong children qty"
 
 
     def ages(self, *args: int): # 10 args - maximum

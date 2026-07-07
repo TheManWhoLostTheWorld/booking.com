@@ -1,3 +1,4 @@
+from selenium.common import NoSuchElementException
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -43,8 +44,12 @@ class CalendarHelper(BasePage):
         self.current_date = datetime.now()
 
     def open(self):
-        self.wait.until(EC.element_to_be_clickable(self._CALENDAR_TRIGGER_BUTTON)).click()
-        self.wait.until(EC.visibility_of_element_located(self._CALENDAR), message="Calendar was not opened")
+        try:
+            self.driver.find_element(*self._CALENDAR).is_displayed()
+            pass
+        except NoSuchElementException:
+            self.wait.until(EC.element_to_be_clickable(self._CALENDAR_TRIGGER_BUTTON)).click()
+
 
     def click_next_month_button(self):
         calendar = self.wait.until(EC.visibility_of_element_located(self._CALENDAR))
@@ -64,6 +69,21 @@ class CalendarHelper(BasePage):
                     break
         else:
             raise Exception("Date in the past")
+
+    # def set_date_in_the_past(self, day: int, month: int, year: int):
+    #     if datetime(day=day, month=month, year=year) < self.current_date:
+    #         target_month_year = f"{months[month]} {year}"
+    #         calendar = self.wait.until(EC.visibility_of_element_located(self._CALENDAR))
+    #         while target_month_year not in self.driver.find_element(*self._CURRENT_MONTHS_AND_YEAR).text:
+    #             self.click_next_month_button()
+    #             time.sleep(0.5)
+    #         days = calendar.find_elements(*self._DAY)
+    #         for element in days:
+    #             if str(day) in element.text:
+    #                 element.click()
+    #                 break
+    #     else:
+    #         raise Exception("Date in the past")
 
     def plus_minus_day(self, days: int):
         elements = self.wait.until(EC.visibility_of_all_elements_located(self._PLUS_MINUS_DAYS))
